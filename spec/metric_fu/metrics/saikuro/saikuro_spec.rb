@@ -1,4 +1,5 @@
 require "spec_helper"
+MetricFu.metrics_require { 'saikuro/saikuro' }
 
 describe MetricFu::SaikuroGenerator do
   STUB_TEST_DATA = lambda do |generator|

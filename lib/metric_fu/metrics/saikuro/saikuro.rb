@@ -2,6 +2,7 @@
 MetricFu.lib_require       { 'utility'                 }
 MetricFu.metrics_require   { 'saikuro/scratch_file'    }
 MetricFu.metrics_require   { 'saikuro/parsing_element' }
+MetricFu.data_structures_require { 'line_numbers' }
 module MetricFu
 
   class SaikuroGenerator < MetricFu::Generator
