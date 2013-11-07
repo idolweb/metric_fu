@@ -132,8 +132,40 @@ describe MetricFu::Configuration do
         output_directory.should == output_dir
       end
 
-      it 'should set @template_class to AwesomeTemplate' do
+      it 'should set @template_class to AwesomeTemplate by default' do
         template_class.should == AwesomeTemplate
+      end
+
+      describe 'when a templates configuration is given' do
+
+        before do
+          class DummyTemplate;end
+
+          @config.templates_configuration do |config|
+            config.template_class = DummyTemplate
+            config.link_prefix = 'http:/'
+            config.syntax_highlighting = false
+            config.darwin_txmt_protocol_no_thanks = false
+          end
+          @config.reset
+        end
+
+        it 'should set given template_class' do
+          expect(template_class).to eq(DummyTemplate)
+        end
+
+        it 'should set given link_prefix' do
+          expect(MetricFu::Formatter::Templates.option('link_prefix')).to eq('http:/')
+        end
+
+        it 'should set given darwin_txmt_protocol_no_thanks' do
+          expect(MetricFu::Formatter::Templates.option('darwin_txmt_protocol_no_thanks')).to be_false
+        end
+
+        it 'should set given syntax_highlighting' do
+          expect(MetricFu::Formatter::Templates.option('syntax_highlighting')).to be_false
+        end
+
       end
 
       it 'should set @flay to {:dirs_to_flay => @code_dirs}' do

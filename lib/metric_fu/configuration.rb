@@ -56,10 +56,13 @@ module MetricFu
     require_relative 'environment'
     require_relative 'io'
     require_relative 'formatter'
+    require_relative 'templates/configuration'
+
     # TODO: Remove need to include the module
     include MetricFu::Environment
 
     def initialize #:nodoc:#
+      @templates_configuration = MetricFu::Templates::Configuration.new
       reset
     end
 
@@ -75,7 +78,7 @@ module MetricFu
       #   template/filesystem/metric/graph/environment, etc settings
       #   from the configuration instance
       MetricFu::Io::FileSystem.set_directories
-      MetricFu::Formatter::Templates.configure_template(self)
+      MetricFu::Formatter::Templates.templates_configuration = @templates_configuration
       @formatters = []
     end
 
@@ -133,6 +136,14 @@ module MetricFu
 
     def graph_engine
       :bluff
+    end
+
+    def templates_configuration
+      yield @templates_configuration
+    end
+
+    def templates_option(option)
+      @templates_configuration.option(option)
     end
 
   end
