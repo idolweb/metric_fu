@@ -175,7 +175,7 @@ module MetricFu
     def file_url(name, line) # :nodoc:
       return '' unless name
       filename = complete_file_path(name)
-      link_prefix = MetricFu::Formatter::Templates.option('link_prefix')
+      link_prefix = MetricFu::Template::Configuration.option('link_prefix')
       if link_prefix
         "#{link_prefix}/#{name.gsub(/:.*$/, '')}"
       elsif render_as_txmt_protocol?
@@ -197,7 +197,7 @@ module MetricFu
 
     def render_as_txmt_protocol? # :nodoc:
       if MetricFu.configuration.osx?
-        !MetricFu::Formatter::Templates.option('darwin_txmt_protocol_no_thanks')
+        !MetricFu::Template::Configuration.option('darwin_txmt_protocol_no_thanks')
       else
         false
       end
@@ -205,7 +205,7 @@ module MetricFu
 
     def render_as_mvim_protocol? # :nodoc:
       if MetricFu.configuration.osx?
-        !MetricFu::Formatter::Templates.option('darwin_mvim_protocol_no_thanks')
+        !MetricFu::Template::Configuration.option('darwin_mvim_protocol_no_thanks')
       else
         false
       end
