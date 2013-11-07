@@ -60,6 +60,7 @@ module MetricFu
     include MetricFu::Environment
 
     def initialize #:nodoc:#
+      @template_configuration = TemplateConfiguration.new
       reset
     end
 
@@ -75,7 +76,7 @@ module MetricFu
       #   template/filesystem/metric/graph/environment, etc settings
       #   from the configuration instance
       MetricFu::Io::FileSystem.set_directories
-      MetricFu::Formatter::Templates.configure_template(self)
+      MetricFu::Formatter::Templates.configure_template(@template_configuration)
       @formatters = []
     end
 
@@ -135,5 +136,35 @@ module MetricFu
       :bluff
     end
 
+    def template_configuration
+      yield @template_configuration
+    end
+
+    class TemplateConfiguration
+
+      attr_writer :template_class, :link_prefix, :syntax_highlighting, :darwin_txmt_protocol_no_thanks
+
+      def template_class
+        @template_class || AwesomeTemplate
+      end
+
+      def link_prefix
+        @link_prefix
+      end
+
+      def darwin_txmt_protocol_no_thanks
+        @darwin_txmt_protocol_no_thanks == nil ? true : @darwin_txmt_protocol_no_thanks
+      end
+
+      # turning off syntax_highlighting may avoid some UTF-8 issues
+      def syntax_highlighting
+        @syntax_highlighting == nil ? true : @syntax_highlighting
+      end
+
+      def method_missing(method, *_)
+        raise "No such template option: #{method}"
+      end
+
+    end
   end
 end
