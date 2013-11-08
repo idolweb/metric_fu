@@ -1,8 +1,10 @@
+require 'map'
+
 module MetricFu::Templates
   class Configuration
 
     def initialize
-      @options = {}
+      @options = Map.new
       @options[:template_class] = AwesomeTemplate
       @options[:darwin_txmt_protocol_no_thanks] = true
       # turning off syntax_highlighting may avoid some UTF-8 issues
@@ -16,7 +18,7 @@ module MetricFu::Templates
     end
 
     def option(name)
-      @options.fetch(name.to_sym) { raise "No such template option: #{name}" }
+      @options.fetch(name) { raise "No such template option: #{name}" }
     end
 
   end
