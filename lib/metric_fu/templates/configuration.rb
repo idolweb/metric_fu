@@ -9,7 +9,7 @@ module MetricFu::Templates
       @options[:syntax_highlighting] = true
     end
 
-    %i(template_class link_prefix syntax_highlighting darwin_txmt_protocol_no_thanks).each do |option|
+    [:template_class, :link_prefix, :syntax_highlighting, :darwin_txmt_protocol_no_thanks].each do |option|
       define_method("#{option}=") do |arg|
         @options[option] = arg
       end
