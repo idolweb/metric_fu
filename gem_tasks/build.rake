@@ -2,6 +2,7 @@
 require 'rubygems'
 require 'digest/sha2'
 
+# Based on https://github.com/bundler/bundler/blob/ec0621d/lib/bundler/gem_helpers.rb
 GEM_TASKS = Class.new(Rake::TaskLib) do
   include Rake::DSL if defined? Rake::DSL
   attr_reader :base
@@ -53,7 +54,7 @@ GEM_TASKS = Class.new(Rake::TaskLib) do
     raise "Couldn't install gem, run `gem install #{built_gem_path}' for more detailed output" unless out[/Successfully installed/]
     STDOUT.puts "#{name} (#{version}) installed."
   end
-
+  # Based on https://github.com/YorickPeterse/ruby-lint/blob/3e946/task/checksum.rake
   def add_checksum(built_gem_path=nil)
     guard_clean
     built_gem_path ||= build_gem
@@ -184,6 +185,7 @@ GEM_TASKS = Class.new(Rake::TaskLib) do
 
 end.new.install
 
+# Based on https://github.com/YorickPeterse/ruby-lint/blob/3e946e6/task/todo.rake
 desc 'Extracts TODO tags and the likes'
 task :todo do
   regex = %w{NOTE: FIXME: TODO: THINK: @todo}.join('|')
