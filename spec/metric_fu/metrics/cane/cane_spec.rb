@@ -13,44 +13,31 @@ describe CaneGenerator do
     it "should use abc max option" do
       options = {abc_max: 20}
       @cane = MetricFu::CaneGenerator.new(options)
-      @cane.should_receive(:run!).with(" --abc-max 20")
+      @cane.should_receive(:run!).with("--abc-max 20")
       output = @cane.emit
     end
 
     it "should use style max line length option" do
-      options = {line_length: 100}
+      options = {style_measure: 100}
       @cane = MetricFu::CaneGenerator.new(options)
-      @cane.should_receive(:run!).with(" --style-measure 100")
+      @cane.should_receive(:run!).with("--style-measure 100")
       output = @cane.emit
     end
 
     it "should use no-doc if specified" do
-      options = {no_doc: 'y'}
+      options = {no_doc: nil}
       @cane = MetricFu::CaneGenerator.new(options)
-      @cane.should_receive(:run!).with(" --no-doc")
-      output = @cane.emit
-    end
-
-    it "should include doc violations if no_doc != 'y'" do
-      options = {no_doc: 'n'}
-      @cane = MetricFu::CaneGenerator.new(options)
-      @cane.should_receive(:run!).with("")
+      @cane.should_receive(:run!).with('--no-doc')
       output = @cane.emit
     end
 
     it "should use no-readme if specified" do
-      options = {no_readme: 'y'}
+      options = {no_readme: nil}
       @cane = MetricFu::CaneGenerator.new(options)
-      @cane.should_receive(:run!).with(" --no-readme")
+      @cane.should_receive(:run!).with("--no-readme")
       output = @cane.emit
     end
 
-    it "should include README violations if no_readme != 'y'" do
-      options = {no_readme: 'n'}
-      @cane = MetricFu::CaneGenerator.new(options)
-      @cane.should_receive(:run!).with("")
-      output = @cane.emit
-    end
   end
 
   describe "parse cane empty output" do

@@ -2,14 +2,21 @@ module MetricFu
 
   class FlayGenerator < Generator
 
+    ignore_option :dirs_to_flay
+    with_long_option_type :long_option_without_equals
+
     def self.metric
       :flay
     end
 
     def emit
-      minimum_score_parameter = options[:minimum_score] ? "--mass #{options[:minimum_score]} " : ""
-      args =  "#{minimum_score_parameter} #{options[:dirs_to_flay].join(" ")}"
-      @output = run!(args)
+      @output = run!(build_options)
+    end
+
+    def build_options
+      args = super
+      args << ' ' + options[:dirs_to_flay].join(" ") unless options[:dirs_to_flay].empty?
+      args
     end
 
     def analyze

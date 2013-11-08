@@ -2,18 +2,14 @@ module MetricFu
   class CaneGenerator < Generator
     attr_reader :violations, :total_violations
 
+    with_long_option_type :long_option_without_equals
+
     def self.metric
       :cane
     end
 
     def emit
-      args =  [
-        abc_max_param,
-        style_measure_param,
-        no_doc_param,
-        no_readme_param
-      ].join
-      @output = run!(args)
+      @output = run!(build_options)
     end
 
     def analyze
@@ -25,22 +21,6 @@ module MetricFu
       {:cane => {:total_violations => @total_violations, :violations => @violations}}
     end
     private
-
-    def abc_max_param
-      options[:abc_max] ? " --abc-max #{options[:abc_max]}" : ""
-    end
-
-    def style_measure_param
-      options[:line_length] ? " --style-measure #{options[:line_length]}" : ""
-    end
-
-    def no_doc_param
-      options[:no_doc] == 'y' ? " --no-doc" : ""
-    end
-
-    def no_readme_param
-      options[:no_readme] == 'y' ? " --no-readme" : ""
-    end
 
     def violations_by_category
       violations_output = @output.scan(/(.*?)\n\n(.*?)\n\n/m)

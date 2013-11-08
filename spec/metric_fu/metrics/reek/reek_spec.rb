@@ -3,7 +3,7 @@ require "spec_helper"
 describe MetricFu::ReekGenerator do
   describe "emit" do
     it "should include config parameters" do
-      options = {:config_file_pattern => 'lib/config/*.reek', :dirs_to_reek => []}
+      options = {:config => 'lib/config/*.reek', :dirs_to_reek => []}
       reek = MetricFu::ReekGenerator.new(options)
       files_to_analyze = ['lib/foo.rb','lib/bar.rb']
       reek.stub(:files_to_analyze).and_return(files_to_analyze)

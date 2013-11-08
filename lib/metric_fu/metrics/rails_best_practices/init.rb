@@ -1,12 +1,10 @@
 module MetricFu
   class MetricRailsBestPractices < Metric
 
+    with_default_run_options({:silent => true})
+
     def name
       :rails_best_practices
-    end
-
-    def default_run_options
-      {}
     end
 
     def has_graph?

@@ -1,6 +1,7 @@
 module MetricFu
-
   class ChurnGenerator < Generator
+
+    with_underscores
 
     def self.metric
       :churn
@@ -31,7 +32,7 @@ module MetricFu
     end
 
     def churn_code
-      run!(build_churn_options)
+      run!(build_options)
     end
 
     def ensure_output_is_valid_yaml(output)
@@ -41,26 +42,6 @@ module MetricFu
       else
         nil
       end
-    end
-
-    def build_churn_options
-      opts = ["--yaml"]
-      churn_options.each do |churn_option, command_flag|
-        if has_option?(churn_option)
-          opts << "#{command_flag}=#{options[churn_option]}"
-        end
-      end
-      opts.join(" ")
-    end
-
-    def has_option?(churn_option)
-      options.include?(churn_option)
-    end
-    def churn_options
-      {
-        :minimum_churn_count => '--minimum_churn_count',
-        :start_date => '--start_date'
-      }
     end
 
   end

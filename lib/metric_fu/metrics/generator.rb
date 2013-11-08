@@ -1,3 +1,4 @@
+require_relative 'option_builder'
 MetricFu.lib_require { 'utility' }
 module MetricFu
 
@@ -31,6 +32,7 @@ module MetricFu
   # in general setup the directory structure that the MetricFu system
   # expects.
   class Generator
+    include OptionsBuilder
 
     attr_reader :result, :template, :options
 

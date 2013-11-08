@@ -8,7 +8,7 @@ module MetricFu
     def emit
       mf_debug "** Rails Best Practices"
       path = '.'
-      analyzer = ::RailsBestPractices::Analyzer.new(path, { 'silent' => true })
+      analyzer = ::RailsBestPractices::Analyzer.new(path, options)
       analyzer.analyze
       @output = analyzer.errors
     end

@@ -12,7 +12,7 @@ describe MetricFu::FlogGenerator do
 
   describe "emit method" do
     it "should look for files and flog them" do
-      FlogCLI.should_receive(:parse_options).with(["--all","--continue"]).and_return("options")
+      FlogCLI.should_receive(:parse_options).with(["--continue", "--all", "--quiet"]).and_return("options")
       FlogCLI.should_receive(:new).with("options").and_return(flogger = double('flogger'))
       flogger.should_receive(:flog).with("lib")
       @flog.emit

@@ -1,13 +1,13 @@
 module MetricFu
   class MetricRoodi < Metric
 
+    with_aliase :roodi_config, :config
+
+    with_default_run_options({:dirs_to_roodi => MetricFu::Io::FileSystem.directory('code_dirs'),
+          :config => "#{MetricFu::Io::FileSystem.directory('root_directory')}/config/roodi_config.yml"})
+
     def name
       :roodi
-    end
-
-    def default_run_options
-      { :dirs_to_roodi => MetricFu::Io::FileSystem.directory('code_dirs'),
-                    :roodi_config => "#{MetricFu::Io::FileSystem.directory('root_directory')}/config/roodi_config.yml"}
     end
 
     def has_graph?
