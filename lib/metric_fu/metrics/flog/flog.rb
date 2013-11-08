@@ -4,15 +4,14 @@ require 'optparse'
 module MetricFu
   class FlogGenerator < Generator
 
+    ignore_option :dirs_to_flog
+
     def self.metric
       :flog
     end
 
     def emit
-      parse_options = FlogCLI.parse_options [
-        "--all",
-        options[:continue] ? "--continue" : nil,
-      ].compact
+      parse_options = FlogCLI.parse_options(build_options.split(" "))
       @flogger = FlogCLI.new parse_options
       @flogger.flog *options[:dirs_to_flog]
     end

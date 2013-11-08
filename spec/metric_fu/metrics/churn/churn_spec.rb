@@ -16,13 +16,13 @@ describe MetricFu::ChurnGenerator do
     end
 
     it "initializes with yaml option" do
-      churn = MetricFu::ChurnGenerator.new
-      churn.send(:build_churn_options).should == "--yaml"
+      churn = MetricFu::ChurnGenerator.new({ :yaml => true })
+      churn.send(:build_options).should == "--yaml"
     end
 
     it "initializes with given minimum_churn_count option" do
-      churn = MetricFu::ChurnGenerator.new( { :minimum_churn_count => 5 })
-      churn.send(:build_churn_options).should == "--yaml --minimum_churn_count=5"
+      churn = MetricFu::ChurnGenerator.new( { :yaml => true, :minimum_churn_count => 5, })
+      churn.send(:build_options).should == "--yaml --minimum_churn_count=5"
     end
   end
 

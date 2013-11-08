@@ -1,19 +1,13 @@
 module MetricFu
   class MetricCane < Metric
 
+    with_aliase :line_length, :style_measure
+
+    with_default_run_options({:abc_max => 15,
+                              :style_measure => 80})
+
     def name
       :cane
-    end
-
-    def default_run_options
-      {
-        :dirs_to_cane => MetricFu::Io::FileSystem.directory('code_dirs'),
-        :abc_max => 15,
-        :line_length => 80,
-        :no_doc => 'n',
-        :no_readme => 'n',
-        :filetypes => ['rb']
-      }
     end
 
     def has_graph?

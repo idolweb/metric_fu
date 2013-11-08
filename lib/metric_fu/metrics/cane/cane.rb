@@ -7,13 +7,7 @@ module MetricFu
     end
 
     def emit
-      args =  [
-        abc_max_param,
-        style_measure_param,
-        no_doc_param,
-        no_readme_param
-      ].join
-      @output = run!(args)
+      @output = run!(build_options)
     end
 
     def analyze
@@ -25,22 +19,6 @@ module MetricFu
       {:cane => {:total_violations => @total_violations, :violations => @violations}}
     end
     private
-
-    def abc_max_param
-      options[:abc_max] ? " --abc-max #{options[:abc_max]}" : ""
-    end
-
-    def style_measure_param
-      options[:line_length] ? " --style-measure #{options[:line_length]}" : ""
-    end
-
-    def no_doc_param
-      options[:no_doc] == 'y' ? " --no-doc" : ""
-    end
-
-    def no_readme_param
-      options[:no_readme] == 'y' ? " --no-readme" : ""
-    end
 
     def violations_by_category
       violations_output = @output.scan(/(.*?)\n\n(.*?)\n\n/m)
@@ -88,6 +66,12 @@ module MetricFu
       else
         @total_violations = 0
       end
+    end
+
+    def build_long_option(option, val)
+      arg = "--#{sanitize_option_name(option)}"
+      arg << " #{val}" unless val.nil?
+      arg
     end
   end
 end

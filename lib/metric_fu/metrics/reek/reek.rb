@@ -3,6 +3,8 @@ module MetricFu
   class ReekGenerator < Generator
     REEK_REGEX = /^(\S+) (.*) \((.*)\)$/
 
+    with_long_option_type :long_option_without_equals
+
     def self.metric
       :reek
     end
@@ -94,15 +96,7 @@ module MetricFu
     end
 
     def cli_options(files)
-      '--line-number ' <<
-        config_option(options[:config_file_pattern]) << ' ' <<
-        files.join(' ')
-    end
-
-    def config_option(location)
-      return '' if location.to_s.empty?
-      option = "--config #{location}"
-      '--config .reek ' << option unless location == '.reek'
+      build_options + ' ' + files.join(' ')
     end
 
   end

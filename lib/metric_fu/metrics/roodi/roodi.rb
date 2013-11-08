@@ -8,8 +8,7 @@ module MetricFu
     def emit
       files_to_analyze = options[:dirs_to_roodi].map{|dir| Dir[File.join(dir, "**/*.rb")] }
       files = remove_excluded_files(files_to_analyze.flatten)
-      config = options[:roodi_config] ? "-config=#{options[:roodi_config]}" : ""
-      args = "#{config} #{files.join(" ")}"
+      args = "#{build_options} #{files.join(" ")}"
       @output = run!(args)
     end
 

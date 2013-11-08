@@ -134,7 +134,6 @@ describe MetricFu::Generator do
 
     end
 
-
   end
 
 end

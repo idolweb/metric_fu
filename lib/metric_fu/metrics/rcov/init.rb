@@ -1,16 +1,27 @@
 module MetricFu
   class MetricRcov < Metric
 
-    def name
-      :rcov
+    def self.rcov_opts
+      rcov_opts = [
+          "--sort coverage",
+          "--no-html",
+          "--text-coverage",
+          "--no-color",
+          "--profile",
+          "--exclude-only '.*'",
+          '--include-file "\Aapp,\Alib"'
+      ]
+      rcov_opts << "-Ispec" if File.exist?("spec")
+      rcov_opts
     end
 
-    def default_run_options
-      { :environment => 'test',
-                    :test_files =>  Dir['{spec,test}/**/*_{spec,test}.rb'],
-                    :rcov_opts => rcov_opts,
-                    :external => nil
-                  }
+    with_default_run_options({:environment => 'test',
+          :test_files => Dir['{spec,test}/**/*_{spec,test}.rb'],
+          :rcov_opts => self.rcov_opts,
+          :external => nil})
+
+    def name
+      :rcov
     end
 
     def has_graph?
@@ -25,21 +36,7 @@ module MetricFu
       super
     end
 
-    private
 
-    def rcov_opts
-      rcov_opts = [
-        "--sort coverage",
-        "--no-html",
-        "--text-coverage",
-        "--no-color",
-        "--profile",
-        "--exclude-only '.*'",
-        '--include-file "\Aapp,\Alib"'
-      ]
-      rcov_opts << "-Ispec" if File.exist?("spec")
-      rcov_opts
-    end
 
   end
 end

@@ -1,13 +1,13 @@
 module MetricFu
   class MetricReek < Metric
 
+    with_aliase :config_file_pattern, :config
+
+    with_default_run_options({:dirs_to_reek => MetricFu::Io::FileSystem.directory('code_dirs'),
+          :config => 'config/*.reek', :line_number => true})
+
     def name
       :reek
-    end
-
-    def default_run_options
-      { :dirs_to_reek => MetricFu::Io::FileSystem.directory('code_dirs'),
-                    :config_file_pattern => 'config/*.reek'}
     end
 
     def has_graph?

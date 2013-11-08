@@ -1,15 +1,16 @@
 require 'set'
+require_relative 'metric_configuration'
 MetricFu.lib_require { 'gem_run' }
 # Encapsulates the configuration options for each metric
 module MetricFu
   class Metric
+    include MetricConfiguration
 
     attr_accessor :enabled, :activated
 
     def initialize
       self.enabled = false
       @libraries = Set.new
-      @configured_run_options = {}
     end
 
     def enable
@@ -33,15 +34,6 @@ module MetricFu
       name
     end
 
-    # @return metric run options [Hash]
-    def run_options
-      default_run_options.merge(configured_run_options)
-    end
-
-    def default_run_args
-      run_options.map { |k, v| "--#{k} #{v}" }.join(' ')
-    end
-
     def run
       not_implemented
     end
@@ -54,15 +46,6 @@ module MetricFu
         args: args,
       })
       runner.run
-    end
-
-    def configured_run_options
-      @configured_run_options
-    end
-
-    # @return default metric run options [Hash]
-    def default_run_options
-      not_implemented
     end
 
     # @return metric_options [Hash]
@@ -87,27 +70,6 @@ module MetricFu
 
     def self.inherited(subclass)
       @metrics << subclass.new
-    end
-
-    protected
-
-    # Enable using a syntax such as metric.foo = 'foo'
-    #   by catching the missing method here,
-    #   checking if :foo is a key in the default_run_options, and
-    #   setting the key/value in the @configured_run_options hash
-    # TODO: See if we can do this without a method_missing
-    def method_missing(method, *args)
-      key = method_to_attr(method)
-      if default_run_options.has_key?(key)
-        configured_run_options[key] = args.first
-      else
-        raise "#{key} is not a valid configuration option"
-      end
-    end
-
-    # Used above to identify the stem of a setter method
-    def method_to_attr(method)
-      method.to_s.sub(/=$/, '').to_sym
     end
 
     private

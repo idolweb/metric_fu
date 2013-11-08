@@ -74,6 +74,9 @@ module MetricFu
     def setup
       MetricFu.lib_require { 'configuration' }
       MetricFu.lib_require { 'metric' }
+
+      MetricFu::Configuration.new.reset
+
       # TODO: consolidate these setup files
       MetricFu.lib_require { 'initial_requires' }
       # Load a few things to make our lives easier elsewhere.

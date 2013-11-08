@@ -139,14 +139,14 @@ describe MetricFu::Configuration do
       it 'should set @flay to {:dirs_to_flay => @code_dirs}' do
         load_metric 'flay'
         expect(MetricFu::Metric.get_metric(:flay).run_options).to eq(
-                {:dirs_to_flay => ['lib'], :filetypes=>["rb"], :minimum_score=>nil}
+                {:dirs_to_flay => ['lib']}
         )
       end
 
       it 'should set @reek to {:dirs_to_reek => @code_dirs}' do
         load_metric 'reek'
         expect(MetricFu::Metric.get_metric(:reek).run_options).to eq(
-                {:config_file_pattern=>'config/*.reek', :dirs_to_reek => ['lib']}
+                {:config=>'config/*.reek', :dirs_to_reek => ['lib'], :line_number => true}
         )
       end
 
@@ -154,14 +154,14 @@ describe MetricFu::Configuration do
         load_metric 'roodi'
         expect(MetricFu::Metric.get_metric(:roodi).run_options).to eq(
                 { :dirs_to_roodi => directory('code_dirs'),
-                    :roodi_config => "#{directory('root_directory')}/config/roodi_config.yml"}
+                  :config => "#{directory('root_directory')}/config/roodi_config.yml"}
                 )
       end
 
       it 'should set @churn to {}' do
         load_metric 'churn'
         expect(MetricFu::Metric.get_metric(:churn).run_options).to eq(
-                { :start_date => %q("1 year ago"), :minimum_churn_count => 10}
+                { :start_date => %q("1 year ago"), :minimum_churn_count => 10, :yaml => true}
         )
       end
 
@@ -233,9 +233,7 @@ describe MetricFu::Configuration do
               :dirs_to_cane => directory('code_dirs'),
               :filetypes => ["rb"],
               :abc_max => 15,
-              :line_length => 80,
-              :no_doc => "n",
-              :no_readme => "n"}
+              :line_length => 80}
               )
         end
       end
@@ -262,7 +260,7 @@ describe MetricFu::Configuration do
 
       it 'should set @rails_best_practices to {}' do
         load_metric 'rails_best_practices'
-        expect(MetricFu::Metric.get_metric(:rails_best_practices).run_options).to eql({})
+        expect(MetricFu::Metric.get_metric(:rails_best_practices).run_options).to eql({ "silent" => true })
       end
     end
 

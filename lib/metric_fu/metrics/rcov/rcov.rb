@@ -46,7 +46,7 @@ module MetricFu
     def default_command
       reset_output_location
       test_files = FileList[*options[:test_files]].join(' ')
-      rcov_opts = options[:rcov_opts].join(' ')
+      rcov_opts = build_options
       %Q(RAILS_ENV=#{options[:environment]} rcov #{test_files} #{rcov_opts} >> #{default_output_file})
     end
 

@@ -3,7 +3,7 @@ require "spec_helper"
 describe MetricFu::FlayGenerator do
   describe "emit method" do
     it "should look at the dirs" do
-      options = { :dirs_to_flay => ['app', 'lib'], :filetypes => ['rb']  }
+      options = { :dirs_to_flay => ['app', 'lib'] }
       File.stub(:directory?).and_return(true)
       @flay = MetricFu::FlayGenerator.new(options)
 
@@ -12,12 +12,12 @@ describe MetricFu::FlayGenerator do
     end
 
     it "should limit flay scores by the minimum_score" do
-      options = { :dirs_to_flay => [], :minimum_score => 99 }
+      options = { :dirs_to_flay => [], :mass => 99 }
       File.stub(:directory?).and_return(true)
       @flay = MetricFu::FlayGenerator.new(options)
 
-      @flay.should_receive(:run!).with("--mass 99  ")
-      output = @flay.emit
+      @flay.should_receive(:run!).with("--mass 99")
+      @flay.emit
     end
   end
 

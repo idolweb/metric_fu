@@ -11,15 +11,7 @@ module MetricFu
     end
 
     def emit
-      options_string = options.inject("") do |options, option|
-        option[0] == :input_directory ? options : options + "--#{option.join(' ')} "
-      end
-
-      options[:input_directory].each do |input_dir|
-        options_string += "--input_directory #{input_dir} "
-      end
-
-      @output = run!(options_string)
+      @output = run!(build_options)
     end
 
     def analyze
