@@ -25,13 +25,16 @@ module MetricFu
 
       module_function
 
-      def option(name)
-        @config.send(name.to_sym)
+      def templates_configuration=(templates_configuration)
+        @templates_configuration = templates_configuration
       end
 
-      # TODO: Remove config argument
-      def configure_template(config)
-        @config = config
+      def option(name)
+        templates_configuration.option(name)
+      end
+
+      def templates_configuration
+        @templates_configuration ||= MetricFu::Templates::Configuration.new
       end
 
     end

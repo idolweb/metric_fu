@@ -136,12 +136,12 @@ describe MetricFu::Configuration do
         template_class.should == AwesomeTemplate
       end
 
-      describe 'when a templateconfiguration is given' do
+      describe 'when a templates configuration is given' do
 
         before do
           class DummyTemplate;end
 
-          @config.template_configuration do |config|
+          @config.templates_configuration do |config|
             config.template_class = DummyTemplate
             config.link_prefix = 'http:/'
             config.syntax_highlighting = false
@@ -151,19 +151,19 @@ describe MetricFu::Configuration do
         end
 
         it 'should set given template_class' do
-          template_class.should == DummyTemplate
+          expect(template_class).to eq(DummyTemplate)
         end
 
         it 'should set given link_prefix' do
-          MetricFu::Formatter::Templates.option('link_prefix').should == 'http:/'
+          expect(MetricFu::Formatter::Templates.option('link_prefix')).to eq('http:/')
         end
 
         it 'should set given darwin_txmt_protocol_no_thanks' do
-          MetricFu::Formatter::Templates.option('darwin_txmt_protocol_no_thanks').should be_false
+          expect(MetricFu::Formatter::Templates.option('darwin_txmt_protocol_no_thanks')).to be_false
         end
 
         it 'should set given syntax_highlighting' do
-          MetricFu::Formatter::Templates.option('syntax_highlighting').should be_false
+          expect(MetricFu::Formatter::Templates.option('syntax_highlighting')).to be_false
         end
 
       end
