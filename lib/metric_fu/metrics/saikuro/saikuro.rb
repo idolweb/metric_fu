@@ -6,6 +6,9 @@ module MetricFu
 
   class SaikuroGenerator < MetricFu::Generator
 
+    with_long_option_type :long_option_without_equals
+    with_underscores
+
     def self.metric
       :saikuro
     end
