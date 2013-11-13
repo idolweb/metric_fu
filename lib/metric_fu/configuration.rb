@@ -142,5 +142,9 @@ module MetricFu
       yield @templates_configuration
     end
 
+    def templates_option(option)
+      @templates_configuration.option(option)
+    end
+
   end
 end
