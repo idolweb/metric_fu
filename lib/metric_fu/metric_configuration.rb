@@ -35,10 +35,10 @@ module MetricFu
     def method_missing(method, *args)
       key = method_to_attr(method)
       value = args.first
-      if value != false
-        set_option(key, args.first)
-      else
+      if value == false
         remove_option(key)
+      else
+        set_option(key, args.first)
       end
     end
 

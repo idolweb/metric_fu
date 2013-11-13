@@ -67,11 +67,5 @@ module MetricFu
         @total_violations = 0
       end
     end
-
-    def build_long_option(option, val)
-      arg = "--#{sanitize_option_name(option)}"
-      arg << " #{val}" unless val.nil?
-      arg
-    end
   end
 end
