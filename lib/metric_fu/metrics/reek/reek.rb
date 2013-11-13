@@ -4,6 +4,7 @@ module MetricFu
     REEK_REGEX = /^(\S+) (.*) \((.*)\)$/
 
     with_long_option_type :long_option_without_equals
+    ignore_option :dirs_to_reek
 
     def self.metric
       :reek
