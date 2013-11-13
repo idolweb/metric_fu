@@ -226,14 +226,12 @@ describe MetricFu::Configuration do
            })
         end
         it 'should set @cane to ' +
-                            %q(:dirs_to_cane => @code_dirs, :abc_max => 15, :line_length => 80, :no_doc => 'n', :no_readme => 'y') do
+                            %q(:abc_max => 15, :line_length => 80) do
           load_metric 'cane'
           expect(MetricFu::Metric.get_metric(:cane).run_options).to eq(
             {
-              :dirs_to_cane => directory('code_dirs'),
-              :filetypes => ["rb"],
               :abc_max => 15,
-              :line_length => 80}
+              :style_measure => 80}
               )
         end
       end
@@ -260,7 +258,7 @@ describe MetricFu::Configuration do
 
       it 'should set @rails_best_practices to {}' do
         load_metric 'rails_best_practices'
-        expect(MetricFu::Metric.get_metric(:rails_best_practices).run_options).to eql({ "silent" => true })
+        expect(MetricFu::Metric.get_metric(:rails_best_practices).run_options).to eql({ 'silent' => true })
       end
     end
 

@@ -1,7 +1,7 @@
 module MetricFu
   class MetricRailsBestPractices < Metric
 
-    with_default_run_options({'silent' => true})
+    with_default_run_options({:silent => true})
 
     def name
       :rails_best_practices

@@ -2,6 +2,8 @@ module MetricFu
   class CaneGenerator < Generator
     attr_reader :violations, :total_violations
 
+    with_long_option_type :long_option_without_equals
+
     def self.metric
       :cane
     end
